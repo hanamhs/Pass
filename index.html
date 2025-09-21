@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>하남고등학교 입학자 발표</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>하남고등학교 입학자 발표</h1>
+        <div class="image-wrapper">
+            <img src="images/hanam_school.jpg" alt="하남고등학교 전경" class="school-image">
+        </div>
+        <form id="checkForm">
+            <input type="text" id="studentName" placeholder="이름을 입력하세요">
+            <input type="text" id="studentId" placeholder="수험번호를 입력하세요">
+            <button type="submit">결과 조회</button>
+        </form>
+        <div id="result"></div>
+        <audio id="schoolSong" src="sounds/school_song.mp3" preload="auto"></audio>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
