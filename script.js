@@ -70,11 +70,16 @@ studentForm.addEventListener('submit', function(e) {
                         <title>입학증 출력</title>
                         <style>
                             @page {
-                                size: A4 landscape; /* 이 부분이 추가되었습니다 */
+                                size: A4 landscape;
                             }
                             @media print {
                                 body { margin: 0; }
-                                img { width: 100%; height: auto; }
+                                img { 
+                                    width: 100%; 
+                                    height: auto;
+                                    max-width: 100%; /* 이 부분이 추가되었습니다 */
+                                    max-height: 100%; /* 이 부분이 추가되었습니다 */
+                                }
                             }
                         </style>
                     </head>
