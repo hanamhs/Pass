@@ -1,11 +1,21 @@
 // script.js 파일
 
+// 합격자 데이터를 배열(Array) 형태로 변경
 const passedStudents = [
     { name: "홍길동", studentId: "2025001" },
     { name: "김철수", studentId: "2025002" },
     { name: "이영희", studentId: "2025003" },
     { name: "홍길동", studentId: "2025101" }
 ];
+
+// 한글 이름을 영문 파일명으로 연결해주는 목록
+const nameMap = {
+    "홍길동": "hong_gildong",
+    "김철수": "kim_chulsoo",
+    "이영희": "lee_younghee" 
+    // 새로운 합격자가 생기면 여기에 추가하세요.
+    // 예: "박민준": "park_minjun"
+};
 
 const studentForm = document.getElementById('checkForm');
 const resultDiv = document.getElementById('result');
@@ -38,14 +48,9 @@ studentForm.addEventListener('submit', function(e) {
     }
 
     if (isPassed) {
-        let certificateImagePath = '';
-        if (foundStudent.name === '홍길동' && foundStudent.studentId === '2025001') {
-            certificateImagePath = `images/hong_gildong_2025001.jpg`;
-        } else if (foundStudent.name === '김철수' && foundStudent.studentId === '2025002') {
-            certificateImagePath = `images/kim_chulsoo_2025002.jpg`;
-        } else {
-            certificateImagePath = `images/${foundStudent.name}_${foundStudent.studentId}.jpg`;
-        }
+        // nameMap에서 영문 파일명을 찾고, 없으면 한글 이름 그대로 사용
+        const englishName = nameMap[foundStudent.name] || foundStudent.name;
+        const certificateImagePath = `images/${englishName}_${foundStudent.studentId}.jpg`;
         
         resultDiv.innerHTML = `
             <div class="pass-message">
