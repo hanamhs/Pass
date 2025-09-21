@@ -45,22 +45,54 @@ studentForm.addEventListener('submit', function(e) {
 
     if (isPassed) {
         const englishName = nameMap[foundStudent.name] || foundStudent.name;
-        const certificateFilePath = `images/${englishName}_${foundStudent.studentId}.pdf`;
+        const certificateImagePath = `images/${englishName}_${foundStudent.studentId}.jpg`;
         
         resultDiv.innerHTML = `
             <div class="pass-message">
                 <h2>⭐ 축하합니다, ${name}님! ⭐</h2>
-                <p>하남고등학교 입학을 진심으로 축하합니다. 아래 버튼을 눌러 입학증을 확인하고 인쇄하세요.</p>
+                <p>하남고등학교 입학을 진심으로 축하합니다. 아래 이미지를 확인하고 인쇄하세요.</p>
                 <div class="certificate-display">
-                    <p style="text-align:center; color:#555; margin-top: 20px;">입학증을 보려면 아래 버튼을 클릭하세요.</p>
+                    <img src="${certificateImagePath}" alt="입학증 이미지" style="width: 100%; max-width: 800px; height: auto; border: 1px solid #ddd; margin-top: 20px;">
                 </div>
-                <button id="viewAndPrintCertificate">입학증 확인 및 인쇄</button>
+                <button id="printCertificate">입학증 출력</button>
             </div>
         `;
         schoolSong.play();
         
-        document.getElementById('viewAndPrintCertificate').addEventListener('click', function() {
-            window.open(certificateFilePath, '_blank');
+        document.getElementById('printCertificate').addEventListener('click', function() {
+            const imageToPrint = resultDiv.querySelector('.certificate-display img');
+            if (imageToPrint) {
+                const printWindow = window.open('', '_blank');
+                printWindow.document.write(`
+                    <!DOCTYPE html>
+                    <html>
+                    <head>
+                        <title>입학증 출력</title>
+                        <style>
+                            @page {
+                                size: A4 landscape; /* 이 부분이 추가되었습니다 */
+                            }
+                            @media print {
+                                body { margin: 0; }
+                                img { width: 100%; height: auto; }
+                            }
+                        </style>
+                    </head>
+                    <body>
+                        <img src="${imageToPrint.src}" />
+                        <script>
+                            window.onload = function() {
+                                window.print();
+                                setTimeout(() => window.close(), 100);
+                            };
+                        </script>
+                    </body>
+                    </html>
+                `);
+                printWindow.document.close();
+            } else {
+                alert('출력할 입학증 이미지를 찾을 수 없습니다.');
+            }
         });
     } else {
         resultDiv.innerHTML = `
