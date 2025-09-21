@@ -1,11 +1,10 @@
 // script.js 파일
 
-// 합격자 데이터를 배열(Array) 형태로 변경
 const passedStudents = [
     { name: "홍길동", studentId: "2025001" },
     { name: "김철수", studentId: "2025002" },
     { name: "이영희", studentId: "2025003" },
-    { name: "홍길동", studentId: "2025101" } // 동명이인 추가
+    { name: "홍길동", studentId: "2025101" }
 ];
 
 const studentForm = document.getElementById('checkForm');
@@ -14,7 +13,6 @@ const schoolSong = document.getElementById('schoolSong');
 
 studentForm.addEventListener('submit', function(e) {
     e.preventDefault();
-
     const name = document.getElementById('studentName').value.trim();
     const id = document.getElementById('studentId').value.trim();
     
@@ -27,8 +25,6 @@ studentForm.addEventListener('submit', function(e) {
 
     let isFound = false;
     let isPassed = false;
-
-    // 배열의 각 학생 정보를 순서대로 확인
     let foundStudent = null;
     for (const student of passedStudents) {
         if (student.name === name) {
@@ -42,8 +38,14 @@ studentForm.addEventListener('submit', function(e) {
     }
 
     if (isPassed) {
-        // 합격
-        const certificateImagePath = `images/${foundStudent.name}_${foundStudent.studentId}.jpg`;
+        let certificateImagePath = '';
+        if (foundStudent.name === '홍길동' && foundStudent.studentId === '2025001') {
+            certificateImagePath = `images/hong_gildong_2025001.jpg`;
+        } else if (foundStudent.name === '김철수' && foundStudent.studentId === '2025002') {
+            certificateImagePath = `images/kim_chulsoo_2025002.jpg`;
+        } else {
+            certificateImagePath = `images/${foundStudent.name}_${foundStudent.studentId}.jpg`;
+        }
         
         resultDiv.innerHTML = `
             <div class="pass-message">
@@ -90,7 +92,6 @@ studentForm.addEventListener('submit', function(e) {
             }
         });
     } else {
-        // 이름이 명단에 없거나(isFound === false) 수험번호가 틀린 경우(isFound === true)
         resultDiv.innerHTML = `
             <div class="error-message">
                 <h2>죄송합니다, 확인되지 않는 정보입니다.</h2>
