@@ -1,6 +1,5 @@
 // script.js 파일
 
-// 합격자 데이터를 배열(Array) 형태로 변경
 const passedStudents = [
     { name: "홍길동", studentId: "2025001" },
     { name: "김철수", studentId: "2025002" },
@@ -8,13 +7,10 @@ const passedStudents = [
     { name: "홍길동", studentId: "2025101" }
 ];
 
-// 한글 이름을 영문 파일명으로 연결해주는 목록
 const nameMap = {
     "홍길동": "hong_gildong",
     "김철수": "kim_chulsoo",
     "이영희": "lee_younghee" 
-    // 새로운 합격자가 생기면 여기에 추가하세요.
-    // 예: "박민준": "park_minjun"
 };
 
 const studentForm = document.getElementById('checkForm');
@@ -48,53 +44,23 @@ studentForm.addEventListener('submit', function(e) {
     }
 
     if (isPassed) {
-        // nameMap에서 영문 파일명을 찾고, 없으면 한글 이름 그대로 사용
         const englishName = nameMap[foundStudent.name] || foundStudent.name;
-        const certificateImagePath = `images/${englishName}_${foundStudent.studentId}.jpg`;
+        const certificateFilePath = `images/${englishName}_${foundStudent.studentId}.pdf`;
         
         resultDiv.innerHTML = `
             <div class="pass-message">
                 <h2>⭐ 축하합니다, ${name}님! ⭐</h2>
-                <p>하남고등학교 입학을 진심으로 축하합니다. 저희와 함께 꿈을 펼쳐나가길 기대합니다.</p>
+                <p>하남고등학교 입학을 진심으로 축하합니다. 아래 버튼을 눌러 입학증을 확인하고 인쇄하세요.</p>
                 <div class="certificate-display">
-                    <img src="${certificateImagePath}" alt="입학증 이미지" style="width: 100%; max-width: 800px; height: auto; border: 1px solid #ddd; margin-top: 20px;">
+                    <p style="text-align:center; color:#555; margin-top: 20px;">입학증을 보려면 아래 버튼을 클릭하세요.</p>
                 </div>
-                <button id="printCertificate">입학증 출력</button>
+                <button id="viewAndPrintCertificate">입학증 확인 및 인쇄</button>
             </div>
         `;
         schoolSong.play();
         
-        document.getElementById('printCertificate').addEventListener('click', function() {
-            const imageToPrint = resultDiv.querySelector('.certificate-display img');
-            if (imageToPrint) {
-                const printWindow = window.open('', '_blank');
-                printWindow.document.write(`
-                    <!DOCTYPE html>
-                    <html>
-                    <head>
-                        <title>입학증 출력</title>
-                        <style>
-                            @media print {
-                                body { margin: 0; }
-                                img { width: 100%; height: auto; }
-                            }
-                        </style>
-                    </head>
-                    <body>
-                        <img src="${imageToPrint.src}" />
-                        <script>
-                            window.onload = function() {
-                                window.print();
-                                setTimeout(() => window.close(), 100);
-                            };
-                        </script>
-                    </body>
-                    </html>
-                `);
-                printWindow.document.close();
-            } else {
-                alert('출력할 입학증 이미지를 찾을 수 없습니다.');
-            }
+        document.getElementById('viewAndPrintCertificate').addEventListener('click', function() {
+            window.open(certificateFilePath, '_blank');
         });
     } else {
         resultDiv.innerHTML = `
