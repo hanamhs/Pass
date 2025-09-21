@@ -43,7 +43,6 @@ studentForm.addEventListener('submit', function(e) {
 
     if (isPassed) {
         // 합격
-        // 학생 정보에 맞는 이미지 파일 경로를 생성
         const certificateImagePath = `images/${foundStudent.name}_${foundStudent.studentId}.jpg`;
         
         resultDiv.innerHTML = `
@@ -58,7 +57,6 @@ studentForm.addEventListener('submit', function(e) {
         `;
         schoolSong.play();
         
-        // 새로 생성된 버튼에 이벤트 리스너를 다시 연결
         document.getElementById('printCertificate').addEventListener('click', function() {
             const imageToPrint = resultDiv.querySelector('.certificate-display img');
             if (imageToPrint) {
@@ -91,23 +89,12 @@ studentForm.addEventListener('submit', function(e) {
                 alert('출력할 입학증 이미지를 찾을 수 없습니다.');
             }
         });
-
-    } else if (isFound) {
-        // 이름은 맞지만 수험번호가 틀린 경우 (동명이인 포함)
+    } else {
+        // 이름이 명단에 없거나(isFound === false) 수험번호가 틀린 경우(isFound === true)
         resultDiv.innerHTML = `
             <div class="error-message">
                 <h2>죄송합니다, 확인되지 않는 정보입니다.</h2>
-                <p>입력하신 수험번호를 다시 한 번 확인해 주세요.</p>
-            </div>
-        `;
-        schoolSong.pause();
-        schoolSong.currentTime = 0;
-    } else {
-        // 입력한 이름이 명단에 없는 경우
-        resultDiv.innerHTML = `
-            <div class="fail-message">
-                <h2>아쉽지만, 다음 기회에...</h2>
-                <p>이번에 함께하지 못하게 되어 아쉽습니다. ${name}님께서 앞으로 어떤 길을 가시든 늘 응원하겠습니다.</p>
+                <p>입력하신 이름과 수험번호를 다시 한 번 확인해 주세요.</p>
             </div>
         `;
         schoolSong.pause();
