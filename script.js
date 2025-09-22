@@ -73,12 +73,19 @@ studentForm.addEventListener('submit', function(e) {
                                 size: A4 landscape;
                             }
                             @media print {
-                                body { margin: 0; }
+                                html, body { 
+                                    margin: 0;
+                                    padding: 0;
+                                    width: 100%;
+                                    height: 100%;
+                                    overflow: hidden;
+                                }
                                 img { 
-                                    width: 100%; 
-                                    height: auto;
-                                    max-width: 100%; /* 이 부분이 추가되었습니다 */
-                                    max-height: 100%; /* 이 부분이 추가되었습니다 */
+                                    width: 100%;
+                                    height: 100%;
+                                    max-width: 100%;
+                                    max-height: 100%;
+                                    object-fit: contain; /* 이 부분이 최종 수정되었습니다 */
                                 }
                             }
                         </style>
